@@ -4,11 +4,8 @@ const slides = [...document.querySelectorAll(".slide")];
 const prevBtn = document.getElementById("prevBtn");
 const nextBtn = document.getElementById("nextBtn");
 const fullscreenBtn = document.getElementById("fullscreenBtn");
-const notesBtn = document.getElementById("notesBtn");
 const slideCounter = document.getElementById("slideCounter");
 const progressBar = document.getElementById("progressBar");
-const presenterNotes = document.getElementById("presenterNotes");
-const presenterText = document.getElementById("presenterText");
 let currentSlide = 0;
 
 function showSlide(index) {
@@ -24,15 +21,7 @@ function showSlide(index) {
     nextBtn.disabled = currentSlide === slides.length - 1;
     slideCounter.textContent = `${String(currentSlide + 1).padStart(2, "0")} / ${String(slides.length).padStart(2, "0")}`;
     progressBar.style.width = `${((currentSlide + 1) / slides.length) * 100}%`;
-    presenterText.textContent = slides[currentSlide].querySelector(".speaker-script")?.textContent.trim() || "";
     history.replaceState(null, "", `#slide-${currentSlide + 1}`);
-}
-
-function togglePresenterNotes() {
-    const willShow = presenterNotes.hidden;
-    presenterNotes.hidden = !willShow;
-    notesBtn.setAttribute("aria-pressed", String(willShow));
-    notesBtn.classList.toggle("active", willShow);
 }
 
 prevBtn.addEventListener("click", () => showSlide(currentSlide - 1));
@@ -42,12 +31,6 @@ document.addEventListener("keydown", (event) => {
     // Không chiếm phím mũi tên khi người dùng đang nhập liệu ở slide demo.
     const isEditing = ["INPUT", "TEXTAREA", "SELECT"].includes(document.activeElement?.tagName);
     if (isEditing) return;
-
-    if (event.key.toLowerCase() === "n") {
-        event.preventDefault();
-        togglePresenterNotes();
-        return;
-    }
 
     if (event.key === "ArrowRight" || event.key === "PageDown" || event.key === " ") {
         event.preventDefault();
@@ -60,8 +43,6 @@ document.addEventListener("keydown", (event) => {
     if (event.key === "Home") showSlide(0);
     if (event.key === "End") showSlide(slides.length - 1);
 });
-
-notesBtn.addEventListener("click", togglePresenterNotes);
 
 fullscreenBtn.addEventListener("click", async () => {
     try {

@@ -26,7 +26,6 @@
                     <div class="orbit orbit-one"></div>
                     <div class="orbit orbit-two"></div>
                 </div>
-                <p class="speaker-script">Mở đầu: Bài trình bày so sánh hai lớp kiểm tra dữ liệu. Client-side là kiểm tra ở trình duyệt; server-side là kiểm tra lại tại máy chủ. Ý chính cần nhớ là không được tin hoàn toàn dữ liệu do người dùng gửi lên.</p>
             </section>
 
             <section class="slide" data-slide="2" aria-labelledby="slide-2-title">
@@ -35,22 +34,25 @@
                     <h2 id="slide-2-title">Input Validation là gì?</h2>
                 </header>
                 <div class="definition-layout">
-                    <p class="lead compact">Là quá trình <mark>kiểm tra và xác minh dữ liệu đầu vào</mark> trước khi hệ thống xử lý.</p>
-                    <div class="validation-line" aria-label="Các tiêu chí kiểm tra">
-                        <span>KIỂU</span><i></i><span>ĐỊNH DẠNG</span><i></i><span>PHẠM VI</span><i></i><span>ĐỘ DÀI</span><i></i><span>QUY TẮC NGHIỆP VỤ</span>
-                    </div>
+                    <p class="lead compact">Input Validation là quá trình <mark>kiểm tra và xác minh dữ liệu đầu vào</mark> trước khi dữ liệu được hệ thống xử lý, sử dụng hoặc lưu trữ.</p>
+                    <ul class="point-grid">
+                        <li><strong>Đúng kiểu dữ liệu</strong><span>Kiểm tra type khớp với yêu cầu: số, chuỗi, boolean...</span></li>
+                        <li><strong>Đúng định dạng</strong><span>Khớp mẫu/định dạng mong muốn: email, ngày tháng...</span></li>
+                        <li><strong>Phạm vi &amp; độ dài hợp lệ</strong><span>Giá trị và số ký tự nằm trong giới hạn cho phép.</span></li>
+                        <li><strong>Tuân thủ quy tắc nghiệp vụ</strong><span>Đáp ứng đúng ràng buộc riêng của hệ thống.</span></li>
+                        <li><strong>Phát hiện sớm</strong><span>Chặn dữ liệu bất thường càng sớm càng tốt.</span></li>
+                    </ul>
                     <div class="server-flow compact-flow" aria-label="Luồng xử lý dữ liệu đầu vào">
                         <div class="flow-node"><small>01</small><strong>USER INPUT</strong><span>Dữ liệu người dùng nhập</span></div>
                         <div class="flow-arrow">→</div>
-                        <div class="flow-node featured"><small>02</small><strong>VALIDATION</strong><span>Kiểm tra kiểu, định dạng,<br>phạm vi, độ dài, quy tắc</span></div>
+                        <div class="flow-node featured"><small>02</small><strong>VALIDATION</strong><span>Kiểu · định dạng · phạm vi<br>độ dài · quy tắc nghiệp vụ</span></div>
                         <div class="flow-arrow">→</div>
                         <div class="flow-node"><small>03</small><strong>APPLICATION</strong><span>Xử lý và lưu trữ dữ liệu</span></div>
                     </div>
                     <blockquote>
-                        Dữ liệu từ bên ngoài không mặc nhiên đáng tin cậy — <strong>mọi input đều phải được kiểm tra.</strong>
+                        Ví dụ: tuổi đăng ký phải là số nguyên, nằm trong khoảng từ 18 đến 60. Dữ liệu từ bên ngoài không mặc nhiên đáng tin cậy — <strong>mọi input đều phải được kiểm tra.</strong>
                     </blockquote>
                 </div>
-                <p class="speaker-script">Input Validation nghĩa là kiểm tra dữ liệu đầu vào trước khi sử dụng. Ta cần kiểm tra đúng kiểu, đúng định dạng, đúng phạm vi và đúng quy tắc nghiệp vụ. Mọi dữ liệu từ bên ngoài đều phải được xem là chưa đáng tin cậy.</p>
             </section>
 
             <section class="slide" data-slide="3" aria-labelledby="slide-3-title">
@@ -58,23 +60,43 @@
                     <p class="section-no">02 / TRÌNH DUYỆT</p>
                     <h2 id="slide-3-title">Client-side Validation</h2>
                 </header>
-                <div class="two-column">
-                    <div class="concept-visual browser-window" aria-hidden="true">
-                        <div class="browser-bar"><i></i><i></i><i></i></div>
-                        <div class="fake-field"><span>email@example.com</span><b>✓</b></div>
-                        <div class="fake-field danger"><span>age: -100</span><b>!</b></div>
-                        <div class="code-line">required · min/max · minlength · pattern</div>
+                <div class="feature-layout">
+                    <div class="intro-row">
+                        <p class="lead compact">Client-side Validation là kiểm tra dữ liệu ngay tại phía client — thường là trình duyệt của người dùng — trước khi request được gửi đến server.</p>
+                        <div class="concept-visual browser-window mini" aria-hidden="true">
+                            <div class="browser-bar"><i></i><i></i><i></i></div>
+                            <div class="fake-field"><span>email@example.com</span><b>✓</b></div>
+                            <div class="fake-field danger"><span>age: -100</span><b>!</b></div>
+                        </div>
                     </div>
-                    <div>
-                        <ul class="feature-list">
-                            <li><strong>Thực hiện trên trình duyệt</strong><span>Bằng HTML5, JavaScript hoặc framework frontend.</span></li>
-                            <li><strong>Phản hồi nhanh</strong><span>Cải thiện trải nghiệm người dùng, giảm yêu cầu sai gửi lên máy chủ.</span></li>
-                            <li><strong>Có thể bị vượt qua</strong><span>Qua DevTools, Postman, curl hoặc request tự tạo.</span></li>
-                        </ul>
-                        <p class="takeaway warning">Tốt cho UX, nhưng không đủ để bảo mật hệ thống.</p>
+                    <div class="three-col-cards">
+                        <div class="mini-card">
+                            <h4>Cách triển khai</h4>
+                            <ul>
+                                <li>HTML5: required, minlength, min/max, pattern...</li>
+                                <li>JavaScript hoặc frontend framework.</li>
+                                <li>Kiểm tra ngay khi nhập hoặc submit form.</li>
+                            </ul>
+                        </div>
+                        <div class="mini-card good">
+                            <h4>Ưu điểm</h4>
+                            <ul>
+                                <li>Phản hồi lỗi gần như ngay lập tức.</li>
+                                <li>Cải thiện trải nghiệm người dùng (UX).</li>
+                                <li>Giảm request sai gửi tới server.</li>
+                            </ul>
+                        </div>
+                        <div class="mini-card bad">
+                            <h4>Hạn chế</h4>
+                            <ul>
+                                <li>Code chạy trên máy người dùng.</li>
+                                <li>Người dùng có thể sửa hoặc bỏ qua.</li>
+                                <li>Bypass được bằng DevTools, Postman, curl.</li>
+                            </ul>
+                        </div>
                     </div>
+                    <p class="takeaway warning">Client-side Validation tốt cho UX nhưng <strong>KHÔNG đủ để bảo mật hệ thống.</strong></p>
                 </div>
-                <p class="speaker-script">Client-side Validation là kiểm tra ngay trên trình duyệt. Nó phản hồi nhanh và giúp người dùng sửa lỗi, nhưng kẻ tấn công có thể bỏ qua bằng DevTools hoặc Postman. Vì vậy lớp này giúp trải nghiệm, không phải lớp bảo mật cuối cùng.</p>
             </section>
 
             <section class="slide" data-slide="4" aria-labelledby="slide-4-title">
@@ -82,7 +104,8 @@
                     <p class="section-no">03 / BACKEND</p>
                     <h2 id="slide-4-title">Server-side Validation</h2>
                 </header>
-                <div class="server-flow">
+                <p class="lead compact">Server-side Validation là quá trình backend kiểm tra lại toàn bộ dữ liệu nhận được từ client trước khi xử lý hoặc lưu trữ.</p>
+                <div class="server-flow compact-flow">
                     <div class="flow-node"><small>01</small><strong>YÊU CẦU</strong><span>Dữ liệu từ trình duyệt</span></div>
                     <div class="flow-arrow">→</div>
                     <div class="flow-node featured"><small>02</small><strong>KIỂM TRA</strong><span>Kiểu · Phạm vi · Độ dài<br>Định dạng · Quy tắc nghiệp vụ</span></div>
@@ -90,39 +113,55 @@
                     <div class="flow-node"><small>03</small><strong>XỬ LÝ</strong><span>Xử lý hoặc lưu dữ liệu</span></div>
                 </div>
                 <div class="server-points">
-                    <p><span>01</span> Không tin dữ liệu do client gửi lên — <strong>Never Trust Client Input.</strong></p>
-                    <p><span>02</span> Trả mã lỗi phù hợp như <code>HTTP 400</code> khi input không hợp lệ.</p>
+                    <div class="example-card">
+                        <span class="example-label">VÍ DỤ</span>
+                        <p>Hệ thống yêu cầu tuổi 18–60 nhưng nhận:</p>
+                        <pre class="mini-code">{ "tuoi": -100 }</pre>
+                        <p>→ Backend phải <strong>từ chối request</strong>.</p>
+                    </div>
+                    <div class="rule-stack">
+                        <p><span>01</span> Không tin dữ liệu do client gửi lên — <strong>Never Trust Client Input.</strong></p>
+                        <p><span>02</span> Dữ liệu không hợp lệ → server trả <code>HTTP 400 Bad Request</code>.</p>
+                    </div>
                 </div>
-                <p class="takeaway">Lớp kiểm soát bắt buộc về bảo mật — không thể bỏ qua dù đã có client-side validation.</p>
-                <p class="speaker-script">Server-side Validation là kiểm tra tại máy chủ trước khi xử lý hoặc lưu. Máy chủ phải tự kiểm tra lại mọi điều kiện, kể cả khi trình duyệt đã kiểm tra. Dữ liệu sai nên được trả về HTTP 400, nghĩa là yêu cầu không hợp lệ.</p>
+                <p class="takeaway">Server-side Validation là <strong>lớp kiểm tra bắt buộc</strong> — không thể bỏ qua dù client đã kiểm tra.</p>
             </section>
 
             <section class="slide" data-slide="5" aria-labelledby="slide-5-title">
-                <header class="slide-heading">
-                    <p class="section-no">04 / SO SÁNH</p>
-                    <h2 id="slide-5-title">Client-side vs Server-side Validation</h2>
+                <header class="slide-heading compact-heading">
+                    <div>
+                        <p class="section-no">04 / SO SÁNH</p>
+                        <h2 id="slide-5-title">Client-side vs Server-side Validation</h2>
+                    </div>
                 </header>
                 <div class="compare-grid">
                     <div class="compare-card client">
-                        <h3>CLIENT-SIDE</h3>
-                        <div class="compare-row"><span>Vị trí</span><strong>Trình duyệt</strong></div>
-                        <div class="compare-row"><span>Mục đích chính</span><strong>UX</strong></div>
-                        <div class="compare-row"><span>Tốc độ phản hồi</span><strong>Nhanh, tức thì</strong></div>
-                        <div class="compare-row"><span>Có thể bị bypass</span><strong class="bad">Có</strong></div>
-                        <div class="compare-row"><span>Đủ để bảo mật</span><strong class="bad">Không</strong></div>
+                        <h3>CLIENT-SIDE VALIDATION</h3>
+                        <div class="compare-row"><span>Vị trí</span><strong>Trình duyệt / Frontend</strong></div>
+                        <div class="compare-row"><span>Mục đích chính</span><strong>Hỗ trợ người dùng nhập đúng dữ liệu, cải thiện UX.</strong></div>
+                        <div class="compare-row"><span>Thời điểm</span><strong>Trước khi request được gửi tới server.</strong></div>
+                        <div class="compare-row"><span>Ưu điểm</span><strong>Phản hồi nhanh, giảm request sai.</strong></div>
+                        <div class="compare-row"><span>Hạn chế</span><strong class="bad">Có thể bị sửa, tắt hoặc bypass bởi người dùng.</strong></div>
+                        <div class="compare-row"><span>Vai trò bảo mật</span><strong class="bad">Không thể dùng làm lớp bảo mật duy nhất.</strong></div>
                     </div>
                     <div class="compare-vs" aria-hidden="true">VS</div>
                     <div class="compare-card server">
-                        <h3>SERVER-SIDE</h3>
-                        <div class="compare-row"><span>Vị trí</span><strong>Backend</strong></div>
-                        <div class="compare-row"><span>Mục đích chính</span><strong>Bảo mật &amp; tính đúng đắn</strong></div>
-                        <div class="compare-row"><span>Tốc độ phản hồi</span><strong>Cần gọi tới server</strong></div>
-                        <div class="compare-row"><span>Có thể bị client bỏ qua</span><strong class="good">Không</strong></div>
-                        <div class="compare-row"><span>Bắt buộc</span><strong class="good">Có</strong></div>
+                        <h3>SERVER-SIDE VALIDATION</h3>
+                        <div class="compare-row"><span>Vị trí</span><strong>Backend / Server</strong></div>
+                        <div class="compare-row"><span>Mục đích chính</span><strong>Bảo vệ business logic và tính toàn vẹn dữ liệu.</strong></div>
+                        <div class="compare-row"><span>Thời điểm</span><strong>Sau khi server nhận request, trước khi xử lý/lưu.</strong></div>
+                        <div class="compare-row"><span>Ưu điểm</span><strong>Server tự kiểm soát toàn bộ quy tắc validation.</strong></div>
+                        <div class="compare-row"><span>Hạn chế</span><strong>Cần gọi tới server nên phản hồi không tức thời.</strong></div>
+                        <div class="compare-row"><span>Vai trò bảo mật</span><strong class="good">Bắt buộc phải có.</strong></div>
                     </div>
                 </div>
-                <p class="takeaway">Không phải chọn một trong hai — <strong>hệ thống tốt cần cả hai.</strong></p>
-                <p class="speaker-script">Đây là bảng so sánh trực diện. Client-side chạy ở trình duyệt, phục vụ trải nghiệm người dùng, phản hồi nhanh nhưng có thể bị bypass nên không đủ để bảo mật. Server-side chạy ở backend, bảo vệ tính đúng đắn của dữ liệu, cần một lượt gọi tới server nhưng không thể bị client bỏ qua và luôn bắt buộc. Kết luận: không phải chọn một trong hai, hệ thống tốt cần cả hai lớp kiểm tra.</p>
+                <div class="equation">
+                    <div><span>CLIENT-SIDE VALIDATION</span><strong>Trải nghiệm người dùng</strong></div>
+                    <b class="equation-op">+</b>
+                    <div><span>SERVER-SIDE VALIDATION</span><strong>Bảo mật &amp; tính đúng đắn</strong></div>
+                    <div class="equation-result"><b class="equation-op">=</b><strong>Thiết kế đúng</strong></div>
+                </div>
+                <p class="takeaway">Không phải lựa chọn Client hay Server — <strong>một hệ thống tốt cần cả hai.</strong></p>
             </section>
 
             <section class="slide demo-slide" data-slide="6" aria-labelledby="slide-6-title">
@@ -138,6 +177,8 @@
                         <strong id="serverState">BẬT</strong>
                     </label>
                 </header>
+
+                <p class="demo-goal">Mục tiêu: chứng minh dữ liệu sai có thể vượt qua Client-side Validation, nhưng vẫn phải bị Server-side Validation chặn lại.</p>
 
                 <div id="unsafeBanner" class="unsafe-banner" role="alert" hidden>
                     ⚠ Máy chủ đang không kiểm tra dữ liệu — chế độ minh họa cố ý không an toàn.
@@ -202,7 +243,6 @@
                     </div>
                 </div>
                 <p class="demo-proof"><span>Kiểm tra tại trình duyệt có thể bị vượt qua</span><b>→</b><strong>Máy chủ phải kiểm tra lại dữ liệu</strong></p>
-                <p class="speaker-script">Cách trình bày: Đầu tiên nhập dữ liệu hợp lệ và bấm Đăng ký để thấy HTTP 200. Nếu nhập sai rồi bấm Đăng ký, trình duyệt chặn nên máy chủ không nhận được gì, dù công tắc máy chủ đang BẬT hay TẮT. Sau đó bấm Bỏ qua kiểm tra trình duyệt: chương trình tự gửi tuổi âm 100. Khi kiểm tra máy chủ đang BẬT, dữ liệu bị chặn với HTTP 400. Chuyển sang TẮT và bấm lại; máy chủ cố ý chấp nhận dữ liệu sai với HTTP 200. Đây chính là nguy cơ khi chỉ tin vào kiểm tra ở trình duyệt.</p>
             </section>
 
             <section class="slide" data-slide="7" aria-labelledby="slide-7-title">
@@ -211,33 +251,39 @@
                     <h2 id="slide-7-title">Kết luận &amp; Cách làm tốt nhất</h2>
                 </header>
                 <div class="conclusion-layout">
-                    <ol class="summary-points">
-                        <li>
-                            <span class="reason-number">01</span>
-                            <div><strong>Client-side Validation</strong><small>→ hỗ trợ người dùng nhập đúng dữ liệu.</small></div>
-                        </li>
-                        <li>
-                            <span class="reason-number">02</span>
-                            <div><strong>Server-side Validation</strong><small>→ bảo vệ hệ thống và dữ liệu.</small></div>
-                        </li>
-                        <li>
-                            <span class="reason-number">03</span>
-                            <div><strong>Client có thể bị bypass</strong><small>→ Server luôn phải validate lại.</small></div>
-                        </li>
-                    </ol>
+                    <div class="conclusion-grid">
+                        <ol class="summary-points">
+                            <li>
+                                <span class="reason-number">01</span>
+                                <div><strong>Client-side Validation</strong><small>Kiểm tra dữ liệu tại trình duyệt, giúp phản hồi nhanh và cải thiện trải nghiệm người dùng.</small></div>
+                            </li>
+                            <li>
+                                <span class="reason-number">02</span>
+                                <div><strong>Server-side Validation</strong><small>Kiểm tra lại dữ liệu tại backend trước khi xử lý hoặc lưu trữ — lớp kiểm tra bắt buộc.</small></div>
+                            </li>
+                            <li>
+                                <span class="reason-number">03</span>
+                                <div><strong>Client có thể bị bypass</strong><small>Kẻ tấn công có thể gửi request trực tiếp tới API mà không dùng giao diện web.</small></div>
+                            </li>
+                            <li>
+                                <span class="reason-number">04</span>
+                                <div><strong>Vì vậy</strong><small>Server luôn phải validate lại dữ liệu dù phía client đã kiểm tra.</small></div>
+                            </li>
+                        </ol>
+                        <div class="mini-card practice">
+                            <h4>Best Practice</h4>
+                            <ul>
+                                <li>Kiểm tra dữ liệu càng sớm càng tốt.</li>
+                                <li>Kiểm tra type, range, length, format và business rules.</li>
+                                <li>Ưu tiên allowlist khi xác định dữ liệu được phép.</li>
+                                <li>Không dựa vào client-side validation để bảo mật.</li>
+                            </ul>
+                        </div>
+                    </div>
                     <blockquote class="final-quote">“Never trust user input.” <cite>Nguồn: OWASP Input Validation Cheat Sheet</cite></blockquote>
                 </div>
-                <p class="speaker-script">Kết luận với ba ý chính: client-side validation hỗ trợ người dùng nhập đúng dữ liệu; server-side validation bảo vệ hệ thống và dữ liệu; và vì client có thể bị bypass nên server luôn phải validate lại. Ghi nhớ nguyên tắc never trust user input, tham khảo OWASP Input Validation Cheat Sheet.</p>
             </section>
         </div>
-
-        <aside id="presenterNotes" class="presenter-notes" hidden aria-live="polite">
-            <div>
-                <strong>GỢI Ý THUYẾT TRÌNH</strong>
-                <span>Nhấn phím N để ẩn/hiện</span>
-            </div>
-            <p id="presenterText"></p>
-        </aside>
 
         <nav class="controls" aria-label="Điều khiển trình chiếu">
             <button id="prevBtn" type="button" aria-label="Slide trước">← <span>Trước</span></button>
@@ -245,7 +291,6 @@
                 <div class="progress-track"><span id="progressBar"></span></div>
                 <span id="slideCounter" aria-live="polite">01 / 07</span>
             </div>
-            <button id="notesBtn" class="notes-btn" type="button" aria-pressed="false" title="Gợi ý thuyết trình (phím N)">☰ <span>Lời dẫn</span></button>
             <button id="fullscreenBtn" class="fullscreen-btn" type="button" aria-label="Bật toàn màn hình" title="Toàn màn hình (hoặc nhấn F11)">⛶</button>
             <button id="nextBtn" type="button" aria-label="Slide tiếp theo"><span>Tiếp</span> →</button>
         </nav>

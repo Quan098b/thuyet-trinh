@@ -1,14 +1,26 @@
 {
+  "functions": {
+    "source": ".",
+    "runtime": "python312",
+    "ignore": [
+      "public/**",
+      "templates/**",
+      "*.md",
+      "Dockerfile",
+      ".dockerignore",
+      "__pycache__",
+      "**/__pycache__/**",
+      ".git/**",
+      "node_modules/**"
+    ]
+  },
   "hosting": {
     "public": "public",
     "ignore": ["firebase.json", "**/.*", "**/node_modules/**"],
     "rewrites": [
       {
         "source": "**",
-        "run": {
-          "serviceId": "owasp-slide",
-          "region": "asia-southeast1"
-        }
+        "function": "owaspapp"
       }
     ]
   }

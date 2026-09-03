@@ -1,0 +1,88 @@
+<!DOCTYPE html>
+<html lang="vi">
+<head>
+    <meta charset="UTF-8">
+    <title>OWASP Input Validation Demo</title>
+</head>
+
+<body>
+
+<h1>Đăng ký tài khoản</h1>
+
+<form id="bieuMauDangKy">
+
+    <label>Họ tên:</label>
+    <input
+        type="text"
+        id="hoTen"
+        minlength="2"
+        required
+    >
+
+    <br><br>
+
+    <label>Tuổi:</label>
+    <input
+        type="number"
+        id="tuoi"
+        min="18"
+        max="60"
+        required
+    >
+
+    <br><br>
+
+    <button type="submit">
+        Đăng ký
+    </button>
+
+</form>
+
+<pre id="ketQua"></pre>
+
+<script>
+
+const bieuMau = document.getElementById("bieuMauDangKy");
+const ketQua = document.getElementById("ketQua");
+
+bieuMau.addEventListener("submit", async function(suKien) {
+
+    // Ngăn trình duyệt tự tải lại trang
+    suKien.preventDefault();
+
+    // Lấy dữ liệu người dùng nhập
+    const hoTen = document.getElementById("hoTen").value;
+    const tuoi = Number(document.getElementById("tuoi").value);
+
+    // Gửi dữ liệu đến server Python
+    const phanHoi = await fetch("/dang-ky", {
+
+        method: "POST",
+
+        headers: {
+            "Content-Type": "application/json"
+        },
+
+        body: JSON.stringify({
+            ho_ten: hoTen,
+            tuoi: tuoi
+        })
+
+    });
+
+    // Nhận dữ liệu JSON từ server
+    const duLieu = await phanHoi.json();
+
+    // Hiển thị kết quả
+    ketQua.textContent =
+        "Mã HTTP: " +
+        phanHoi.status +
+        "\n\n" +
+        JSON.stringify(duLieu, null, 2);
+
+});
+
+</script>
+
+</body>
+</html>

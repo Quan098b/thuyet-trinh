@@ -1,0 +1,242 @@
+<!doctype html>
+<html lang="vi">
+<head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <meta name="theme-color" content="#06111f">
+    <title>OWASP Input Validation — Client-side vs Server-side</title>
+    <link rel="stylesheet" href="{{ url_for('static', filename='style.css') }}">
+</head>
+<body>
+    <main class="presentation" aria-label="Bài trình chiếu OWASP Input Validation">
+        <div class="slide-frame">
+            <section class="slide active title-slide" data-slide="1" aria-labelledby="slide-1-title">
+                <div class="eyebrow"><span class="pulse"></span> OWASP · INPUT VALIDATION</div>
+                <div class="title-lockup">
+                    <p class="kicker">THIẾT KẾ AN TOÀN</p>
+                    <h1 id="slide-1-title">Client-side vs<br><span>Server-side Validation</span></h1>
+                    <p class="subtitle">OWASP Input Validation — Báo cáo kỹ năng lập trình viên</p>
+                </div>
+                <div class="identity">
+                    <span>THÀNH VIÊN</span>
+                    <strong>Ly Khánh Quân · Lê Quang Trung</strong>
+                </div>
+                <div class="hero-orbit" aria-hidden="true">
+                    <div class="shield">{ }</div>
+                    <div class="orbit orbit-one"></div>
+                    <div class="orbit orbit-two"></div>
+                </div>
+                <p class="speaker-script">Mở đầu: Bài trình bày so sánh hai lớp kiểm tra dữ liệu. Client-side là kiểm tra ở trình duyệt; server-side là kiểm tra lại tại máy chủ. Ý chính cần nhớ là không được tin hoàn toàn dữ liệu do người dùng gửi lên.</p>
+            </section>
+
+            <section class="slide" data-slide="2" aria-labelledby="slide-2-title">
+                <header class="slide-heading">
+                    <p class="section-no">01 / KHÁI NIỆM</p>
+                    <h2 id="slide-2-title">Input Validation là gì?</h2>
+                </header>
+                <div class="definition-layout">
+                    <p class="lead">Là quá trình <mark>kiểm tra và xác minh dữ liệu đầu vào</mark> trước khi hệ thống xử lý.</p>
+                    <div class="validation-line" aria-label="Các tiêu chí kiểm tra">
+                        <span>KIỂU</span><i></i><span>ĐỊNH DẠNG</span><i></i><span>PHẠM VI</span><i></i><span>QUY TẮC NGHIỆP VỤ</span>
+                    </div>
+                    <blockquote>
+                        Dữ liệu từ bên ngoài không mặc nhiên đáng tin cậy — <strong>mọi input đều phải được kiểm tra.</strong>
+                    </blockquote>
+                </div>
+                <p class="speaker-script">Input Validation nghĩa là kiểm tra dữ liệu đầu vào trước khi sử dụng. Ta cần kiểm tra đúng kiểu, đúng định dạng, đúng phạm vi và đúng quy tắc nghiệp vụ. Mọi dữ liệu từ bên ngoài đều phải được xem là chưa đáng tin cậy.</p>
+            </section>
+
+            <section class="slide" data-slide="3" aria-labelledby="slide-3-title">
+                <header class="slide-heading">
+                    <p class="section-no">02 / TRÌNH DUYỆT</p>
+                    <h2 id="slide-3-title">Client-side Validation</h2>
+                </header>
+                <div class="two-column">
+                    <div class="concept-visual browser-window" aria-hidden="true">
+                        <div class="browser-bar"><i></i><i></i><i></i></div>
+                        <div class="fake-field"><span>email@example.com</span><b>✓</b></div>
+                        <div class="fake-field danger"><span>age: -100</span><b>!</b></div>
+                        <div class="code-line">required · min/max · pattern</div>
+                    </div>
+                    <div>
+                        <ul class="feature-list">
+                            <li><strong>Thực hiện trên trình duyệt</strong><span>Bằng HTML5, JavaScript hoặc framework frontend.</span></li>
+                            <li><strong>Phản hồi nhanh</strong><span>Cải thiện trải nghiệm người dùng, giảm yêu cầu sai gửi lên máy chủ.</span></li>
+                            <li><strong>Có thể bị vượt qua</strong><span>Qua công cụ lập trình của trình duyệt, Postman hoặc yêu cầu tự tạo.</span></li>
+                        </ul>
+                        <p class="takeaway warning">Tốt cho UX, nhưng không đủ để bảo mật hệ thống.</p>
+                    </div>
+                </div>
+                <p class="speaker-script">Client-side Validation là kiểm tra ngay trên trình duyệt. Nó phản hồi nhanh và giúp người dùng sửa lỗi, nhưng kẻ tấn công có thể bỏ qua bằng DevTools hoặc Postman. Vì vậy lớp này giúp trải nghiệm, không phải lớp bảo mật cuối cùng.</p>
+            </section>
+
+            <section class="slide" data-slide="4" aria-labelledby="slide-4-title">
+                <header class="slide-heading">
+                    <p class="section-no">03 / BACKEND</p>
+                    <h2 id="slide-4-title">Server-side Validation</h2>
+                </header>
+                <div class="server-flow">
+                    <div class="flow-node"><small>01</small><strong>YÊU CẦU</strong><span>Dữ liệu từ trình duyệt</span></div>
+                    <div class="flow-arrow">→</div>
+                    <div class="flow-node featured"><small>02</small><strong>KIỂM TRA</strong><span>Kiểu · Phạm vi · Độ dài<br>Định dạng · Quy tắc nghiệp vụ</span></div>
+                    <div class="flow-arrow">→</div>
+                    <div class="flow-node"><small>03</small><strong>XỬ LÝ</strong><span>Xử lý hoặc lưu dữ liệu</span></div>
+                </div>
+                <div class="server-points">
+                    <p><span>01</span> Không tin dữ liệu do client gửi lên — <strong>Never Trust Client Input.</strong></p>
+                    <p><span>02</span> Trả mã lỗi phù hợp như <code>HTTP 400</code> khi input không hợp lệ.</p>
+                </div>
+                <p class="takeaway">Lớp kiểm soát bắt buộc về bảo mật — không thể bỏ qua dù đã có client-side validation.</p>
+                <p class="speaker-script">Server-side Validation là kiểm tra tại máy chủ trước khi xử lý hoặc lưu. Máy chủ phải tự kiểm tra lại mọi điều kiện, kể cả khi trình duyệt đã kiểm tra. Dữ liệu sai nên được trả về HTTP 400, nghĩa là yêu cầu không hợp lệ.</p>
+            </section>
+
+            <section class="slide" data-slide="5" aria-labelledby="slide-5-title">
+                <header class="slide-heading">
+                    <p class="section-no">04 / GIÁ TRỊ</p>
+                    <h2 id="slide-5-title">Vì sao lập trình viên cần kỹ năng này?</h2>
+                </header>
+                <div class="reasons-grid">
+                    <article>
+                        <span class="reason-number">01</span>
+                        <h3>Bảo mật hệ thống</h3>
+                        <p>Ngăn dữ liệu lỗi đi vào hệ thống, giảm bề mặt tấn công và phòng chống các lỗi bảo mật phổ biến.</p>
+                    </article>
+                    <article>
+                        <span class="reason-number">02</span>
+                        <h3>Toàn vẹn dữ liệu</h3>
+                        <p>Bảo vệ quy tắc nghiệp vụ, đảm bảo tính đúng đắn và toàn vẹn của dữ liệu trong toàn hệ thống.</p>
+                    </article>
+                    <article>
+                        <span class="reason-number">03</span>
+                        <h3>Độ tin cậy &amp; bảo trì</h3>
+                        <p>Tăng độ ổn định, khả năng bảo trì và độ tin cậy của API, giúp hệ thống vận hành bền vững.</p>
+                    </article>
+                </div>
+                <p class="speaker-script">Kỹ năng này quan trọng vì ba lý do: bảo vệ hệ thống khỏi dữ liệu nguy hiểm, giữ dữ liệu đúng và nhất quán, đồng thời giúp API ổn định và dễ bảo trì hơn.</p>
+            </section>
+
+            <section class="slide demo-slide" data-slide="6" aria-labelledby="slide-6-title">
+                <header class="slide-heading compact-heading">
+                    <div>
+                        <p class="section-no">05 / MINH HỌA TRỰC TIẾP</p>
+                        <h2 id="slide-6-title">Tình huống: Vượt qua kiểm tra Form Đăng Ký</h2>
+                    </div>
+                    <label class="server-switch" for="serverValidation">
+                        <span>Kiểm tra tại máy chủ:</span>
+                        <input id="serverValidation" type="checkbox" checked>
+                        <span class="switch-track"><span class="switch-knob"></span></span>
+                        <strong id="serverState">BẬT</strong>
+                    </label>
+                </header>
+
+                <div id="unsafeBanner" class="unsafe-banner" role="alert" hidden>
+                    ⚠ Máy chủ đang không kiểm tra dữ liệu — chế độ minh họa cố ý không an toàn.
+                </div>
+
+                <div class="demo-grid">
+                    <div class="demo-panel form-panel">
+                        <div class="panel-title side-title client-side-title">
+                            <div class="side-name">
+                                <span>CLIENT</span>
+                                <small>TRÌNH DUYỆT</small>
+                            </div>
+                            <output id="clientStatus" class="side-status waiting">CHỜ</output>
+                        </div>
+                        <form id="registrationForm" novalidate>
+                            <label for="hoTen">Họ tên</label>
+                            <input id="hoTen" name="ho_ten" type="text" minlength="2" pattern="[^\d]{2,}" required placeholder="Ví dụ: Nguyễn Văn An" title="Chỉ nhập chữ, khoảng trắng, dấu nháy hoặc gạch nối">
+                            <span class="field-hint">Tối thiểu 2 ký tự, không chứa số</span>
+
+                            <label for="tuoi">Tuổi</label>
+                            <input id="tuoi" name="tuoi" type="number" min="18" max="60" step="1" required placeholder="18–60">
+                            <span class="field-hint">Số nguyên từ 18 đến 60</span>
+
+                            <div class="form-actions">
+                                <button class="primary-btn" type="submit">Đăng ký</button>
+                                <button class="danger-btn" id="bypassBtn" type="button" title="Gửi thẳng dữ liệu giả (tuổi -100) tới server, không lấy theo ô nhập">Bỏ qua kiểm tra trình duyệt</button>
+                            </div>
+                            <span class="field-hint bypass-hint">⚠ Nút này <strong>không lấy dữ liệu từ ô nhập</strong> — nó tự tạo JSON giả (tuổi ‑100) như kẻ tấn công dùng Postman/DevTools để gửi thẳng tới server.</span>
+                            <div id="clientMessage" class="client-message" hidden></div>
+                        </form>
+                        <div class="client-output">
+                            <div id="clientJsonLabel" class="console-label">JSON CLIENT CHUẨN BỊ GỬI</div>
+                            <pre id="clientJson">{ }</pre>
+                        </div>
+                    </div>
+
+                    <div id="requestArrow" class="client-server-arrow idle" aria-live="polite">
+                        <small id="arrowLabel">CHỜ GỬI</small>
+                        <strong id="arrowSymbol">→</strong>
+                    </div>
+
+                    <div class="demo-panel console-panel">
+                        <div class="panel-title side-title server-side-title">
+                            <div class="side-name">
+                                <span>SERVER</span>
+                                <small>MÁY CHỦ</small>
+                            </div>
+                            <output id="serverStatus" class="side-status waiting">CHỜ</output>
+                        </div>
+                        <div class="console-section">
+                            <div id="requestLabel" class="console-label">JSON SERVER NHẬN ĐƯỢC</div>
+                            <pre id="requestJson">{ }</pre>
+                        </div>
+                        <div class="status-row">
+                            <span>KẾT QUẢ XỬ LÝ</span>
+                            <output id="httpStatus" class="status waiting">CHỜ</output>
+                        </div>
+                        <div class="console-section response-section">
+                            <div id="responseLabel" class="console-label">SERVER CHƯA PHẢN HỒI</div>
+                            <pre id="responseJson">{ }</pre>
+                        </div>
+                    </div>
+                </div>
+                <p class="demo-proof"><span>Kiểm tra tại trình duyệt có thể bị vượt qua</span><b>→</b><strong>Máy chủ phải kiểm tra lại dữ liệu</strong></p>
+                <p class="speaker-script">Cách trình bày: Đầu tiên nhập dữ liệu hợp lệ và bấm Đăng ký để thấy HTTP 200. Nếu nhập sai rồi bấm Đăng ký, trình duyệt chặn nên máy chủ không nhận được gì, dù công tắc máy chủ đang BẬT hay TẮT. Sau đó bấm Bỏ qua kiểm tra trình duyệt: chương trình tự gửi tuổi âm 100. Khi kiểm tra máy chủ đang BẬT, dữ liệu bị chặn với HTTP 400. Chuyển sang TẮT và bấm lại; máy chủ cố ý chấp nhận dữ liệu sai với HTTP 200. Đây chính là nguy cơ khi chỉ tin vào kiểm tra ở trình duyệt.</p>
+            </section>
+
+            <section class="slide" data-slide="7" aria-labelledby="slide-7-title">
+                <header class="slide-heading">
+                    <p class="section-no">06 / TỔNG KẾT</p>
+                    <h2 id="slide-7-title">Kết luận &amp; Cách làm tốt nhất</h2>
+                </header>
+                <div class="conclusion-layout">
+                    <div class="equation">
+                        <div><span>CLIENT-SIDE</span><strong>Trải nghiệm người dùng</strong></div>
+                        <b>+</b>
+                        <div><span>SERVER-SIDE</span><strong>Bảo mật &amp; tính đúng đắn</strong></div>
+                    </div>
+                    <ul class="check-list">
+                        <li>Luôn validate lại ở server dù client đã kiểm tra.</li>
+                        <li>Ưu tiên danh sách cho phép (allowlist) và ràng buộc rõ kiểu / phạm vi / độ dài / định dạng.</li>
+                        <li>Validate càng sớm càng tốt trước khi dữ liệu đi sâu vào hệ thống.</li>
+                    </ul>
+                    <blockquote class="final-quote">“Không bao giờ tin dữ liệu người dùng” <cite>Nguyên văn: “Never trust user input” — OWASP</cite></blockquote>
+                </div>
+                <p class="speaker-script">Kết luận: kiểm tra tại trình duyệt giúp trải nghiệm người dùng; kiểm tra tại máy chủ bảo vệ hệ thống và dữ liệu. Luôn kiểm tra lại ở máy chủ, ưu tiên danh sách giá trị được phép và kiểm tra càng sớm càng tốt.</p>
+            </section>
+        </div>
+
+        <aside id="presenterNotes" class="presenter-notes" hidden aria-live="polite">
+            <div>
+                <strong>GỢI Ý THUYẾT TRÌNH</strong>
+                <span>Nhấn phím N để ẩn/hiện</span>
+            </div>
+            <p id="presenterText"></p>
+        </aside>
+
+        <nav class="controls" aria-label="Điều khiển trình chiếu">
+            <button id="prevBtn" type="button" aria-label="Slide trước">← <span>Trước</span></button>
+            <div class="progress-wrap">
+                <div class="progress-track"><span id="progressBar"></span></div>
+                <span id="slideCounter" aria-live="polite">01 / 07</span>
+            </div>
+            <button id="notesBtn" class="notes-btn" type="button" aria-pressed="false" title="Gợi ý thuyết trình (phím N)">☰ <span>Lời dẫn</span></button>
+            <button id="fullscreenBtn" class="fullscreen-btn" type="button" aria-label="Bật toàn màn hình" title="Toàn màn hình (hoặc nhấn F11)">⛶</button>
+            <button id="nextBtn" type="button" aria-label="Slide tiếp theo"><span>Tiếp</span> →</button>
+        </nav>
+    </main>
+
+    <script src="{{ url_for('static', filename='script.js') }}"></script>
+</body>
+</html>

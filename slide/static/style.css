@@ -156,8 +156,9 @@ button, input { font: inherit; }
 .orbit-two { inset: -14%; border-style: dashed; animation: rotate 18s linear infinite; }
 @keyframes rotate { to { transform: rotate(360deg); } }
 
-.definition-layout { position: relative; z-index: 2; display: flex; flex: 1; flex-direction: column; justify-content: space-between; }
+.definition-layout { position: relative; z-index: 2; display: flex; flex: 1; flex-direction: column; justify-content: space-between; gap: clamp(.6rem, 1.2vw, 1.2rem); }
 .lead { max-width: 88%; margin: 0; font-size: clamp(1.75rem, 3vw, 3.65rem); font-weight: 650; line-height: 1.22; letter-spacing: -.035em; }
+.lead.compact { font-size: clamp(1.3rem, 2.15vw, 2.5rem); }
 mark { color: var(--cyan-soft); background: none; }
 .validation-line { display: flex; align-items: center; color: var(--cyan); font: 700 clamp(.72rem, 1.05vw, 1.25rem) Consolas, monospace; letter-spacing: .08em; }
 .validation-line i { flex: 1; height: 1px; margin: 0 1.1rem; background: linear-gradient(90deg, var(--cyan), rgba(82, 229, 255, .16)); }
@@ -186,10 +187,33 @@ blockquote { margin: 0; padding: 1.1rem 1.35rem; color: #c7d9e2; border-left: .2
 .flow-node strong { margin: .5rem 0; font: 700 clamp(1.05rem, 1.5vw, 1.8rem) Consolas, monospace; }
 .flow-node span { color: var(--muted); font-size: clamp(.72rem, .92vw, 1.1rem); line-height: 1.45; }
 .flow-arrow { color: var(--cyan); font-size: clamp(1.4rem, 2vw, 2.5rem); }
+.compact-flow .flow-node { min-height: clamp(4.2rem, 5.4vw, 5.8rem); padding: clamp(.6rem, .9vw, 1.1rem); }
+.compact-flow .flow-node strong { margin: .35rem 0; font-size: clamp(.85rem, 1.15vw, 1.35rem); }
+.compact-flow .flow-node span { font-size: clamp(.62rem, .8vw, .95rem); line-height: 1.35; }
+.compact-flow .flow-arrow { font-size: clamp(1.1rem, 1.6vw, 2rem); }
 .server-points { position: relative; z-index: 2; display: grid; grid-template-columns: 1fr 1fr; gap: 1rem; margin-top: clamp(1rem, 1.6vw, 1.8rem); }
 .server-points p { margin: 0; color: var(--muted); font-size: clamp(.78rem, 1vw, 1.2rem); line-height: 1.45; }
 .server-points p span { margin-right: .5rem; color: var(--cyan); font: 700 .8em Consolas, monospace; }
 code { color: var(--cyan-soft); font-family: Consolas, monospace; }
+
+.compare-grid { position: relative; z-index: 2; display: grid; grid-template-columns: 1fr auto 1fr; gap: clamp(1rem, 2vw, 2.2rem); flex: 1; align-items: stretch; }
+.compare-card { display: flex; flex-direction: column; gap: clamp(.15rem, .3vw, .3rem); padding: clamp(1.1rem, 1.7vw, 1.9rem); border: 1px solid var(--line); border-top: .18rem solid var(--cyan); background: linear-gradient(155deg, rgba(13,45,70,.7), rgba(5,18,31,.4)); }
+.compare-card.server { border-top-color: var(--success); }
+.compare-card h3 { margin: 0 0 .4rem; color: var(--cyan); font: 800 clamp(.85rem, 1.1vw, 1.25rem) Consolas, monospace; letter-spacing: .1em; }
+.compare-card.server h3 { color: var(--success); }
+.compare-row { display: flex; align-items: center; justify-content: space-between; gap: 1rem; padding: clamp(.55rem, .85vw, .9rem) 0; border-bottom: 1px solid rgba(145, 169, 183, .15); }
+.compare-row:last-child { border-bottom: none; }
+.compare-row span { color: var(--muted); font-size: clamp(.72rem, .92vw, 1.05rem); }
+.compare-row strong { font-size: clamp(.8rem, 1.02vw, 1.18rem); font-weight: 700; }
+.compare-row strong.good { color: var(--success); }
+.compare-row strong.bad { color: var(--danger); }
+.compare-vs { align-self: center; color: var(--muted); font: 800 clamp(.85rem, 1.25vw, 1.5rem) Consolas, monospace; letter-spacing: .1em; }
+
+.summary-points { display: grid; gap: clamp(.7rem, 1.2vw, 1.4rem); margin: 0; padding: 0; list-style: none; }
+.summary-points li { display: flex; align-items: baseline; gap: clamp(.9rem, 1.4vw, 1.7rem); padding-bottom: clamp(.7rem, 1.2vw, 1.4rem); border-bottom: 1px solid rgba(145, 169, 183, .17); }
+.summary-points li:last-child { border-bottom: none; padding-bottom: 0; }
+.summary-points strong { display: block; margin-bottom: .25rem; font-size: clamp(1.05rem, 1.55vw, 1.9rem); }
+.summary-points small { color: var(--muted); font-size: clamp(.85rem, 1.1vw, 1.3rem); }
 
 .reasons-grid { position: relative; z-index: 2; display: grid; grid-template-columns: repeat(3, 1fr); gap: clamp(1rem, 1.8vw, 2rem); flex: 1; align-items: stretch; }
 .reasons-grid article { position: relative; overflow: hidden; padding: clamp(1.4rem, 2.2vw, 2.6rem); border-top: .18rem solid var(--cyan); background: linear-gradient(155deg, rgba(13,45,70,.86), rgba(5,18,31,.45)); }

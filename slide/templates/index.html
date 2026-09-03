@@ -13,9 +13,9 @@
             <section class="slide active title-slide" data-slide="1" aria-labelledby="slide-1-title">
                 <div class="eyebrow"><span class="pulse"></span> OWASP · INPUT VALIDATION</div>
                 <div class="title-lockup">
-                    <p class="kicker">THIẾT KẾ AN TOÀN</p>
+                    <p class="kicker">BẢO MẬT DỮ LIỆU ĐẦU VÀO</p>
                     <h1 id="slide-1-title">Client-side vs<br><span>Server-side Validation</span></h1>
-                    <p class="subtitle">OWASP Input Validation — Báo cáo kỹ năng lập trình viên</p>
+                    <p class="subtitle">OWASP Input Validation — Kiểm tra dữ liệu phía Client và Server</p>
                 </div>
                 <div class="identity">
                     <span>THÀNH VIÊN</span>
@@ -35,9 +35,16 @@
                     <h2 id="slide-2-title">Input Validation là gì?</h2>
                 </header>
                 <div class="definition-layout">
-                    <p class="lead">Là quá trình <mark>kiểm tra và xác minh dữ liệu đầu vào</mark> trước khi hệ thống xử lý.</p>
+                    <p class="lead compact">Là quá trình <mark>kiểm tra và xác minh dữ liệu đầu vào</mark> trước khi hệ thống xử lý.</p>
                     <div class="validation-line" aria-label="Các tiêu chí kiểm tra">
-                        <span>KIỂU</span><i></i><span>ĐỊNH DẠNG</span><i></i><span>PHẠM VI</span><i></i><span>QUY TẮC NGHIỆP VỤ</span>
+                        <span>KIỂU</span><i></i><span>ĐỊNH DẠNG</span><i></i><span>PHẠM VI</span><i></i><span>ĐỘ DÀI</span><i></i><span>QUY TẮC NGHIỆP VỤ</span>
+                    </div>
+                    <div class="server-flow compact-flow" aria-label="Luồng xử lý dữ liệu đầu vào">
+                        <div class="flow-node"><small>01</small><strong>USER INPUT</strong><span>Dữ liệu người dùng nhập</span></div>
+                        <div class="flow-arrow">→</div>
+                        <div class="flow-node featured"><small>02</small><strong>VALIDATION</strong><span>Kiểm tra kiểu, định dạng,<br>phạm vi, độ dài, quy tắc</span></div>
+                        <div class="flow-arrow">→</div>
+                        <div class="flow-node"><small>03</small><strong>APPLICATION</strong><span>Xử lý và lưu trữ dữ liệu</span></div>
                     </div>
                     <blockquote>
                         Dữ liệu từ bên ngoài không mặc nhiên đáng tin cậy — <strong>mọi input đều phải được kiểm tra.</strong>
@@ -56,13 +63,13 @@
                         <div class="browser-bar"><i></i><i></i><i></i></div>
                         <div class="fake-field"><span>email@example.com</span><b>✓</b></div>
                         <div class="fake-field danger"><span>age: -100</span><b>!</b></div>
-                        <div class="code-line">required · min/max · pattern</div>
+                        <div class="code-line">required · min/max · minlength · pattern</div>
                     </div>
                     <div>
                         <ul class="feature-list">
                             <li><strong>Thực hiện trên trình duyệt</strong><span>Bằng HTML5, JavaScript hoặc framework frontend.</span></li>
                             <li><strong>Phản hồi nhanh</strong><span>Cải thiện trải nghiệm người dùng, giảm yêu cầu sai gửi lên máy chủ.</span></li>
-                            <li><strong>Có thể bị vượt qua</strong><span>Qua công cụ lập trình của trình duyệt, Postman hoặc yêu cầu tự tạo.</span></li>
+                            <li><strong>Có thể bị vượt qua</strong><span>Qua DevTools, Postman, curl hoặc request tự tạo.</span></li>
                         </ul>
                         <p class="takeaway warning">Tốt cho UX, nhưng không đủ để bảo mật hệ thống.</p>
                     </div>
@@ -92,27 +99,30 @@
 
             <section class="slide" data-slide="5" aria-labelledby="slide-5-title">
                 <header class="slide-heading">
-                    <p class="section-no">04 / GIÁ TRỊ</p>
-                    <h2 id="slide-5-title">Vì sao lập trình viên cần kỹ năng này?</h2>
+                    <p class="section-no">04 / SO SÁNH</p>
+                    <h2 id="slide-5-title">Client-side vs Server-side Validation</h2>
                 </header>
-                <div class="reasons-grid">
-                    <article>
-                        <span class="reason-number">01</span>
-                        <h3>Bảo mật hệ thống</h3>
-                        <p>Ngăn dữ liệu lỗi đi vào hệ thống, giảm bề mặt tấn công và phòng chống các lỗi bảo mật phổ biến.</p>
-                    </article>
-                    <article>
-                        <span class="reason-number">02</span>
-                        <h3>Toàn vẹn dữ liệu</h3>
-                        <p>Bảo vệ quy tắc nghiệp vụ, đảm bảo tính đúng đắn và toàn vẹn của dữ liệu trong toàn hệ thống.</p>
-                    </article>
-                    <article>
-                        <span class="reason-number">03</span>
-                        <h3>Độ tin cậy &amp; bảo trì</h3>
-                        <p>Tăng độ ổn định, khả năng bảo trì và độ tin cậy của API, giúp hệ thống vận hành bền vững.</p>
-                    </article>
+                <div class="compare-grid">
+                    <div class="compare-card client">
+                        <h3>CLIENT-SIDE</h3>
+                        <div class="compare-row"><span>Vị trí</span><strong>Trình duyệt</strong></div>
+                        <div class="compare-row"><span>Mục đích chính</span><strong>UX</strong></div>
+                        <div class="compare-row"><span>Tốc độ phản hồi</span><strong>Nhanh, tức thì</strong></div>
+                        <div class="compare-row"><span>Có thể bị bypass</span><strong class="bad">Có</strong></div>
+                        <div class="compare-row"><span>Đủ để bảo mật</span><strong class="bad">Không</strong></div>
+                    </div>
+                    <div class="compare-vs" aria-hidden="true">VS</div>
+                    <div class="compare-card server">
+                        <h3>SERVER-SIDE</h3>
+                        <div class="compare-row"><span>Vị trí</span><strong>Backend</strong></div>
+                        <div class="compare-row"><span>Mục đích chính</span><strong>Bảo mật &amp; tính đúng đắn</strong></div>
+                        <div class="compare-row"><span>Tốc độ phản hồi</span><strong>Cần gọi tới server</strong></div>
+                        <div class="compare-row"><span>Có thể bị client bỏ qua</span><strong class="good">Không</strong></div>
+                        <div class="compare-row"><span>Bắt buộc</span><strong class="good">Có</strong></div>
+                    </div>
                 </div>
-                <p class="speaker-script">Kỹ năng này quan trọng vì ba lý do: bảo vệ hệ thống khỏi dữ liệu nguy hiểm, giữ dữ liệu đúng và nhất quán, đồng thời giúp API ổn định và dễ bảo trì hơn.</p>
+                <p class="takeaway">Không phải chọn một trong hai — <strong>hệ thống tốt cần cả hai.</strong></p>
+                <p class="speaker-script">Đây là bảng so sánh trực diện. Client-side chạy ở trình duyệt, phục vụ trải nghiệm người dùng, phản hồi nhanh nhưng có thể bị bypass nên không đủ để bảo mật. Server-side chạy ở backend, bảo vệ tính đúng đắn của dữ liệu, cần một lượt gọi tới server nhưng không thể bị client bỏ qua và luôn bắt buộc. Kết luận: không phải chọn một trong hai, hệ thống tốt cần cả hai lớp kiểm tra.</p>
             </section>
 
             <section class="slide demo-slide" data-slide="6" aria-labelledby="slide-6-title">
@@ -201,19 +211,23 @@
                     <h2 id="slide-7-title">Kết luận &amp; Cách làm tốt nhất</h2>
                 </header>
                 <div class="conclusion-layout">
-                    <div class="equation">
-                        <div><span>CLIENT-SIDE</span><strong>Trải nghiệm người dùng</strong></div>
-                        <b>+</b>
-                        <div><span>SERVER-SIDE</span><strong>Bảo mật &amp; tính đúng đắn</strong></div>
-                    </div>
-                    <ul class="check-list">
-                        <li>Luôn validate lại ở server dù client đã kiểm tra.</li>
-                        <li>Ưu tiên danh sách cho phép (allowlist) và ràng buộc rõ kiểu / phạm vi / độ dài / định dạng.</li>
-                        <li>Validate càng sớm càng tốt trước khi dữ liệu đi sâu vào hệ thống.</li>
-                    </ul>
-                    <blockquote class="final-quote">“Không bao giờ tin dữ liệu người dùng” <cite>Nguyên văn: “Never trust user input” — OWASP</cite></blockquote>
+                    <ol class="summary-points">
+                        <li>
+                            <span class="reason-number">01</span>
+                            <div><strong>Client-side Validation</strong><small>→ hỗ trợ người dùng nhập đúng dữ liệu.</small></div>
+                        </li>
+                        <li>
+                            <span class="reason-number">02</span>
+                            <div><strong>Server-side Validation</strong><small>→ bảo vệ hệ thống và dữ liệu.</small></div>
+                        </li>
+                        <li>
+                            <span class="reason-number">03</span>
+                            <div><strong>Client có thể bị bypass</strong><small>→ Server luôn phải validate lại.</small></div>
+                        </li>
+                    </ol>
+                    <blockquote class="final-quote">“Never trust user input.” <cite>Nguồn: OWASP Input Validation Cheat Sheet</cite></blockquote>
                 </div>
-                <p class="speaker-script">Kết luận: kiểm tra tại trình duyệt giúp trải nghiệm người dùng; kiểm tra tại máy chủ bảo vệ hệ thống và dữ liệu. Luôn kiểm tra lại ở máy chủ, ưu tiên danh sách giá trị được phép và kiểm tra càng sớm càng tốt.</p>
+                <p class="speaker-script">Kết luận với ba ý chính: client-side validation hỗ trợ người dùng nhập đúng dữ liệu; server-side validation bảo vệ hệ thống và dữ liệu; và vì client có thể bị bypass nên server luôn phải validate lại. Ghi nhớ nguyên tắc never trust user input, tham khảo OWASP Input Validation Cheat Sheet.</p>
             </section>
         </div>
 
